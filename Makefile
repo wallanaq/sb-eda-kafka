@@ -3,7 +3,7 @@
 all: restart
 
 down:
-	docker compose -f compose.yaml down -v
+	docker compose -f compose.yaml down
 
 build:
 	mvn clean package -DskipTests

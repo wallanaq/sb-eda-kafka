@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,6 +18,9 @@ public class KafkaConsumerService {
 
   private final EventMapper mapper;
   private final EventRepository repository;
+  private final KafkaTemplate<String, EventSchema> kafkaTemplate;
+
+  private static final String TOPIC_DLT = "event-stream-dlt";
 
   @KafkaListener(topics = "event-stream", groupId = "event-consumers")
   public void consume(ConsumerRecord<String, EventSchema> record) {
@@ -25,8 +29,20 @@ public class KafkaConsumerService {
 
     EventEntity entity = mapper.toEntity(event);
 
-    this.repository.save(entity);
+    try {
 
-    log.info("Event saved successfully");
+      if (event.getName().toString().contains("ERROR")) {
+        throw new RuntimeException("Simulated database error");
+      }
+
+      this.repository.save(entity);
+      log.info("Event saved successfully");
+
+    } catch (Exception e) {
+
+      log.error("Failed to save event");
+      kafkaTemplate.send(TOPIC_DLT, event.getEventId().toString(), event);
+
+    }
   }
 }
