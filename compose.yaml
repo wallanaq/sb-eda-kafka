@@ -1,0 +1,75 @@
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.8.0
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka1:
+    image: confluentinc/cp-kafka:7.8.0
+    restart: always
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+
+  kafka2:
+    image: confluentinc/cp-kafka:7.8.0
+    restart: always
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9093:9093"
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.8.0
+    restart: always
+    depends_on:
+      - kafka1
+      - kafka2
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka1:9092,PLAINTEXT://kafka2:9093
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+    ports:
+      - "8081:8081"
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093
+      KAFKA_CLUSTERS_0_SCHEMA_REGISTRY: http://schema-registry:8081
+    depends_on:
+      - kafka1
+      - kafka2
+      - schema-registry
+
+  app:
+    image: wallanaq/sb-eda-kafka:0.0.1
+    depends_on:
+      - kafka1
+      - kafka2
+      - schema-registry
+    ports:
+      - "8083:8080"
+
+networks:
+  default:
+    name: appdev
+    driver: bridge

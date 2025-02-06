@@ -1,0 +1,52 @@
+asyncapi: 2.6.0
+info:
+  title: Event-Driven Architecture API
+  version: '1.0.0'
+  description: API for events from an event-driven system using Kafka and Avro.
+
+servers:
+  production:
+    url: kafka-1:9092
+    description: Production
+    protocol: kafka
+  staging:
+    url: kafka-2:9093
+    description: Staging
+    protocol: kafka
+
+channels:
+  event-stream:
+    description: Event channel
+    subscribe:
+      summary: Event Consumer
+      operationId: consumeEvent
+      message:
+        contentType: application/vnd.apache.avro+json
+        payload:
+          $ref: '#/components/schemas/EventSchema'
+    publish:
+      summary: Event publisher
+      operationId: publishEvent
+      message:
+        contentType: application/vnd.apache.avro+json
+        payload:
+          $ref: '#/components/schemas/EventSchema'
+
+components:
+  schemas:
+    EventSchema:
+      type: object
+      x-parser-schema-id: EventSchema
+      externalDocs:
+        description: Schema Registry Link
+        url: http://localhost:8081/subjects/event-stream-value/versions/latest
+      properties:
+        eventId:
+          type: string
+          description: Event ID
+        name:
+          type: string
+          description: Event name
+        description:
+          type: string
+          description: Event description
