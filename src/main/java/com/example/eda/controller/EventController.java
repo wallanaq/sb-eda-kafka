@@ -5,10 +5,7 @@ import com.example.eda.schemas.EventSchema;
 import com.example.eda.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -20,7 +17,7 @@ public class EventController {
     private final KafkaProducerService service;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody EventDTO event) {
+    public ResponseEntity<?> create(@RequestBody EventDTO event, @RequestHeader(value = "correlationId", required = true) String correlationId) {
 
         var eventSchema = EventSchema.newBuilder()
             .setEventId(UUID.randomUUID().toString())
@@ -28,7 +25,7 @@ public class EventController {
             .setDescription(event.description())
             .build();
 
-        this.service.sendMessage(eventSchema);
+        this.service.sendMessage(eventSchema, correlationId);
 
         return ResponseEntity.accepted().build();
     }

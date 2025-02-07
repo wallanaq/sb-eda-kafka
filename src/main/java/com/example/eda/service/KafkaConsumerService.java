@@ -25,22 +25,24 @@ public class KafkaConsumerService {
   @KafkaListener(topics = "event-stream", groupId = "event-consumers")
   public void consume(ConsumerRecord<String, EventSchema> record) {
     EventSchema event = record.value();
-    System.out.println(event);
 
     EventEntity entity = mapper.toEntity(event);
+
+    var correlationId = new String(record.headers().lastHeader("correlationId").value());
 
     try {
 
       if (event.getName().toString().contains("ERROR")) {
+          log.error("Database error [eventId: {}][correlationId {}]", event.getEventId().toString(), correlationId);
         throw new RuntimeException("Simulated database error");
       }
 
       this.repository.save(entity);
-      log.info("Event saved successfully");
+      log.info("Event saved successfully [eventId: {}][correlationId {}]", event.getEventId().toString(), correlationId);
 
     } catch (Exception e) {
 
-      log.error("Failed to save event");
+      log.error("Failed to save event[eventId: {}][correlationId {}]", event.getEventId().toString(), correlationId);
       kafkaTemplate.send(TOPIC_DLT, event.getEventId().toString(), event);
 
     }
