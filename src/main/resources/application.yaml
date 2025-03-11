@@ -1,5 +1,5 @@
 server:
-  port: {APP_PORT:8080}
+  port: {APP_PORT:80801}
   servlet:
     context-path: /api/v1
 
@@ -12,6 +12,7 @@ spring:
     properties:
       schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
       specific.avro.reader: true
+      enable.auto.commit: false
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
@@ -21,20 +22,9 @@ spring:
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       group-id: event-consumers
       client-id: ${HOSTNAME:sb-eda-kafka}
-
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+      auto-offset-reset: earliest
+    listener:
+      ack-mode: manual
+    retry:
+      topics:
+        enabled: true
