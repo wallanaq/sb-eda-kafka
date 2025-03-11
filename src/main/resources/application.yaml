@@ -10,7 +10,7 @@ spring:
   kafka:
     bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
     properties:
-      schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+      schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
       specific.avro.reader: true
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -20,7 +20,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       group-id: event-consumers
-      client-id: ${HOSTNAME}
+      client-id: ${HOSTNAME:sb-eda-kafka}
 
   datasource:
     url: jdbc:h2:mem:testdb
