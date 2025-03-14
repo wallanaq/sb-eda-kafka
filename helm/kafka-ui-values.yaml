@@ -1,0 +1,17 @@
+yamlApplicationConfig:
+  kafka:
+    clusters:
+      - name: kafka-cluster
+        bootstrapServers: kafka.kafka-dev.svc.cluster.local:9092
+        schemaRegistry: http://schema-registry.kafka-dev.svc.cluster.local:8081
+        properties:
+          security.protocol: SASL_PLAINTEXT
+          sasl.mechanism: SCRAM-SHA-256
+          sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="user1" password="mon0PYPkMj";
+
+  auth:
+    type: disabled
+  management:
+    health:
+      ldap:
+        enabled: false
