@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class EventSchema extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -1382432027962923034L;
+  private static final long serialVersionUID = -1147110891472649520L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventSchema\",\"namespace\":\"com.example.eda.schemas\",\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventSchema\",\"namespace\":\"com.example.eda.schemas\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -72,7 +72,6 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
     return DECODER.decode(b);
   }
 
-  private java.lang.CharSequence eventId;
   private java.lang.CharSequence name;
   private java.lang.CharSequence description;
 
@@ -85,12 +84,10 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
 
   /**
    * All-args constructor.
-   * @param eventId The new value for eventId
    * @param name The new value for name
    * @param description The new value for description
    */
-  public EventSchema(java.lang.CharSequence eventId, java.lang.CharSequence name, java.lang.CharSequence description) {
-    this.eventId = eventId;
+  public EventSchema(java.lang.CharSequence name, java.lang.CharSequence description) {
     this.name = name;
     this.description = description;
   }
@@ -105,9 +102,8 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return eventId;
-    case 1: return name;
-    case 2: return description;
+    case 0: return name;
+    case 1: return description;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -117,28 +113,10 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: eventId = (java.lang.CharSequence)value$; break;
-    case 1: name = (java.lang.CharSequence)value$; break;
-    case 2: description = (java.lang.CharSequence)value$; break;
+    case 0: name = (java.lang.CharSequence)value$; break;
+    case 1: description = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
-  }
-
-  /**
-   * Gets the value of the 'eventId' field.
-   * @return The value of the 'eventId' field.
-   */
-  public java.lang.CharSequence getEventId() {
-    return eventId;
-  }
-
-
-  /**
-   * Sets the value of the 'eventId' field.
-   * @param value the value to set.
-   */
-  public void setEventId(java.lang.CharSequence value) {
-    this.eventId = value;
   }
 
   /**
@@ -216,7 +194,6 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<EventSchema>
     implements org.apache.avro.data.RecordBuilder<EventSchema> {
 
-    private java.lang.CharSequence eventId;
     private java.lang.CharSequence name;
     private java.lang.CharSequence description;
 
@@ -231,17 +208,13 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
      */
     private Builder(com.example.eda.schemas.EventSchema.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.eventId)) {
-        this.eventId = data().deepCopy(fields()[0].schema(), other.eventId);
+      if (isValidValue(fields()[0], other.name)) {
+        this.name = data().deepCopy(fields()[0].schema(), other.name);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.name)) {
-        this.name = data().deepCopy(fields()[1].schema(), other.name);
+      if (isValidValue(fields()[1], other.description)) {
+        this.description = data().deepCopy(fields()[1].schema(), other.description);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
-      }
-      if (isValidValue(fields()[2], other.description)) {
-        this.description = data().deepCopy(fields()[2].schema(), other.description);
-        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
     }
 
@@ -251,58 +224,14 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
      */
     private Builder(com.example.eda.schemas.EventSchema other) {
       super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.eventId)) {
-        this.eventId = data().deepCopy(fields()[0].schema(), other.eventId);
+      if (isValidValue(fields()[0], other.name)) {
+        this.name = data().deepCopy(fields()[0].schema(), other.name);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.name)) {
-        this.name = data().deepCopy(fields()[1].schema(), other.name);
+      if (isValidValue(fields()[1], other.description)) {
+        this.description = data().deepCopy(fields()[1].schema(), other.description);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.description)) {
-        this.description = data().deepCopy(fields()[2].schema(), other.description);
-        fieldSetFlags()[2] = true;
-      }
-    }
-
-    /**
-      * Gets the value of the 'eventId' field.
-      * @return The value.
-      */
-    public java.lang.CharSequence getEventId() {
-      return eventId;
-    }
-
-
-    /**
-      * Sets the value of the 'eventId' field.
-      * @param value The value of 'eventId'.
-      * @return This builder.
-      */
-    public com.example.eda.schemas.EventSchema.Builder setEventId(java.lang.CharSequence value) {
-      validate(fields()[0], value);
-      this.eventId = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'eventId' field has been set.
-      * @return True if the 'eventId' field has been set, false otherwise.
-      */
-    public boolean hasEventId() {
-      return fieldSetFlags()[0];
-    }
-
-
-    /**
-      * Clears the value of the 'eventId' field.
-      * @return This builder.
-      */
-    public com.example.eda.schemas.EventSchema.Builder clearEventId() {
-      eventId = null;
-      fieldSetFlags()[0] = false;
-      return this;
     }
 
     /**
@@ -320,9 +249,9 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       * @return This builder.
       */
     public com.example.eda.schemas.EventSchema.Builder setName(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+      validate(fields()[0], value);
       this.name = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[0] = true;
       return this;
     }
 
@@ -331,7 +260,7 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       * @return True if the 'name' field has been set, false otherwise.
       */
     public boolean hasName() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[0];
     }
 
 
@@ -341,7 +270,7 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       */
     public com.example.eda.schemas.EventSchema.Builder clearName() {
       name = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[0] = false;
       return this;
     }
 
@@ -360,9 +289,9 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       * @return This builder.
       */
     public com.example.eda.schemas.EventSchema.Builder setDescription(java.lang.CharSequence value) {
-      validate(fields()[2], value);
+      validate(fields()[1], value);
       this.description = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -371,7 +300,7 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       * @return True if the 'description' field has been set, false otherwise.
       */
     public boolean hasDescription() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[1];
     }
 
 
@@ -381,7 +310,7 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
       */
     public com.example.eda.schemas.EventSchema.Builder clearDescription() {
       description = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -390,9 +319,8 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
     public EventSchema build() {
       try {
         EventSchema record = new EventSchema();
-        record.eventId = fieldSetFlags()[0] ? this.eventId : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.name = fieldSetFlags()[1] ? this.name : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.description = fieldSetFlags()[2] ? this.description : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.name = fieldSetFlags()[0] ? this.name : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.description = fieldSetFlags()[1] ? this.description : (java.lang.CharSequence) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -425,8 +353,6 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeString(this.eventId);
-
     out.writeString(this.name);
 
     out.writeString(this.description);
@@ -438,24 +364,18 @@ public class EventSchema extends org.apache.avro.specific.SpecificRecordBase imp
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.eventId = in.readString(this.eventId instanceof Utf8 ? (Utf8)this.eventId : null);
-
       this.name = in.readString(this.name instanceof Utf8 ? (Utf8)this.name : null);
 
       this.description = in.readString(this.description instanceof Utf8 ? (Utf8)this.description : null);
 
     } else {
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.eventId = in.readString(this.eventId instanceof Utf8 ? (Utf8)this.eventId : null);
-          break;
-
-        case 1:
           this.name = in.readString(this.name instanceof Utf8 ? (Utf8)this.name : null);
           break;
 
-        case 2:
+        case 1:
           this.description = in.readString(this.description instanceof Utf8 ? (Utf8)this.description : null);
           break;
 

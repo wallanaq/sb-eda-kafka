@@ -1,0 +1,26 @@
+{
+  "type":"record",
+  "name":"HeaderSchema",
+  "namespace":"com.example.eda.schemas",
+  "fields":[
+    {
+      "name":"eventId",
+      "type":"string"
+    },
+    {
+      "name":"source",
+      "type":"string"
+    },
+    {
+      "name":"correlationId",
+      "type":"string"
+    },
+    {
+      "name":"timestamp",
+      "type":{
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

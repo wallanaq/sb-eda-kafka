@@ -489,7 +489,7 @@ autoscaling:
 service:
   ## @param service.type Kubernetes service type
   ##
-  type: ClusterIP
+  type: NodePort
   ## @param service.ports.http Service HTTP port
   ##
   ports:
@@ -499,7 +499,7 @@ service:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   nodePorts:
-    http: ""
+    http: "30081"
   ## @param service.clusterIP Schema Registry service clusterIP IP
   ## e.g:
   ## clusterIP: None

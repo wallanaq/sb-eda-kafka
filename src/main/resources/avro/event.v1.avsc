@@ -4,10 +4,6 @@
    "namespace":"com.example.eda.schemas",
    "fields":[
       {
-         "name":"eventId",
-         "type":"string"
-      },
-      {
          "name":"name",
          "type":"string"
       },
