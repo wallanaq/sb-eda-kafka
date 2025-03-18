@@ -1,7 +1,7 @@
 server:
   port: 9080
   servlet:
-    context-path: /api/v1
+    context-path: /v1
 
 spring:
   application:
@@ -9,6 +9,10 @@ spring:
 
   kafka:
     bootstrap-servers: ${BOOTSTRAP_SERVERS:minikube:31335,minikube:32604,minikube:30446}
+    admin:
+      properties:
+        request.timeout.ms: 3000
+        default.api.timeout.ms: 3000
     properties:
       security.protocol: SASL_PLAINTEXT
       sasl.mechanism: SCRAM-SHA-256
@@ -31,6 +35,20 @@ spring:
 #    retry:
 #      topics:
 #        enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: readinessState,kafka
 
 springwolf:
   docket:
